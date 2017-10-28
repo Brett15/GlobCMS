@@ -5,3 +5,4 @@ Allow for users to register and log in (future task) to manage data
 relating to employmees at "Globtiek"
 
 Prevents common attacks from user input.
+Created by Bret Tomko, framework code provided by codepat
