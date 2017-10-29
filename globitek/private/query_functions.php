@@ -29,7 +29,7 @@
   function find_states_for_country_id($country_id=0) {
     global $db;
     $sql = "SELECT * FROM states ";
-    $sql .= "WHERE country_id='" . $country_id . "' ";
+    $sql .= "WHERE country_id='" . m($db,$country_id) . "' ";
     $sql .= "ORDER BY name ASC;";
     $state_result = db_query($db, $sql);
     return $state_result;
@@ -39,7 +39,7 @@
   function find_state_by_id($id=0) {
     global $db;
     $sql = "SELECT * FROM states ";
-    $sql .= "WHERE id='" . $id . "';";
+    $sql .= "WHERE id='" . m($db,$id) . "';";
     $state_result = db_query($db, $sql);
     return $state_result;
   }
@@ -79,9 +79,9 @@
     $sql = "INSERT INTO states ";
     $sql .= "(name, code, country_id) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $state['name'] . "',";
-    $sql .= "'" . $state['code'] . "',";
-    $sql .= "'" . $state['country_id'] . "'";
+    $sql .= "'" . m($db,$state['name']) . "',";
+    $sql .= "'" . m($db,$state['code']) . "',";
+    $sql .= "'" . m($db,$state['country_id']) . "'";
     $sql .= ");";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -107,10 +107,10 @@
     }
 
     $sql = "UPDATE states SET ";
-    $sql .= "name='" . $state['name'] . "', ";
-    $sql .= "code='" . $state['code'] . "', ";
-    $sql .= "country_id='" . $state['country_id'] . "' ";
-    $sql .= "WHERE id='" . $state['id'] . "' ";
+    $sql .= "name='" . m($db,$state['name']) . "', ";
+    $sql .= "code='" . m($db,$state['code']) . "', ";
+    $sql .= "country_id='" . m($db,$state['country_id']) . "' ";
+    $sql .= "WHERE id='" . m($db,$state['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_state statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -142,7 +142,7 @@
   function find_territories_for_state_id($state_id=0) {
     global $db;
     $sql = "SELECT * FROM territories ";
-    $sql .= "WHERE state_id='" . $state_id . "' ";
+    $sql .= "WHERE state_id='" . m($db,$state_id) . "' ";
     $sql .= "ORDER BY position ASC;";
     $territory_result = db_query($db, $sql);
     return $territory_result;
@@ -152,7 +152,7 @@
   function find_territory_by_id($id=0) {
     global $db;
     $sql = "SELECT * FROM territories ";
-    $sql .= "WHERE id='" . $id . "';";
+    $sql .= "WHERE id='" . m($db,$id) . "';";
     $territory_result = db_query($db, $sql);
     return $territory_result;
   }
@@ -192,9 +192,9 @@
     $sql = "INSERT INTO territories ";
     $sql .= "(name, state_id, position) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $territory['name'] . "',";
-    $sql .= "'" . $territory['state_id'] . "',";
-    $sql .= "'" . $territory['position'] . "'";
+    $sql .= "'" . m($db,$territory['name']) . "',";
+    $sql .= "'" . m($db,$territory['state_id']) . "',";
+    $sql .= "'" . m($db,$territory['position']) . "'";
     $sql .= ");";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -220,10 +220,10 @@
     }
 
     $sql = "UPDATE territories SET ";
-    $sql .= "name='" . $territory['name'] . "', ";
-    $sql .= "state_id='" . $territory['state_id'] . "', ";
-    $sql .= "position='" . $territory['position'] . "' ";
-    $sql .= "WHERE id='" . $territory['id'] . "' ";
+    $sql .= "name='" . m($db,$territory['name']) . "', ";
+    $sql .= "state_id='" . m($db,$territory['state_id']) . "', ";
+    $sql .= "position='" . m($db,$territory['position']) . "' ";
+    $sql .= "WHERE id='" . m($db,$territory['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_territory statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -259,7 +259,7 @@
     $sql = "SELECT * FROM salespeople ";
     $sql .= "LEFT JOIN salespeople_territories
               ON (salespeople_territories.salesperson_id = salespeople.id) ";
-    $sql .= "WHERE salespeople_territories.territory_id='" . $territory_id . "' ";
+    $sql .= "WHERE salespeople_territories.territory_id='" . m($db,$territory_id) . "' ";
     $sql .= "ORDER BY last_name ASC, first_name ASC;";
     $salespeople_result = db_query($db, $sql);
     return $salespeople_result;
@@ -269,7 +269,7 @@
   function find_salesperson_by_id($id=0) {
     global $db;
     $sql = "SELECT * FROM salespeople ";
-    $sql .= "WHERE id='" . $id . "';";
+    $sql .= "WHERE id='" . m($db,$id) . "';";
     $salespeople_result = db_query($db, $sql);
     return $salespeople_result;
   }
@@ -315,10 +315,10 @@
     $sql = "INSERT INTO salespeople ";
     $sql .= "(first_name, last_name, email, phone) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $salesperson['first_name'] . "',";
-    $sql .= "'" . $salesperson['last_name'] . "',";
-    $sql .= "'" . $salesperson['email'] . "',";
-    $sql .= "'" . $salesperson['phone']."'";
+    $sql .= "'" . m($db,$salesperson['first_name']) . "',";
+    $sql .= "'" . m($db,$salesperson['last_name']) . "',";
+    $sql .= "'" . m($db,$salesperson['email']) . "',";
+    $sql .= "'" . m($db,$salesperson['phone'])."'";
     $sql .= ");";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -344,11 +344,11 @@
     }
 
     $sql = "UPDATE salespeople SET ";
-    $sql .= "first_name='" . $salesperson['first_name'] . "', ";
-    $sql .= "last_name='" . $salesperson['last_name'] . "', ";
-    $sql .= "email='" . $salesperson['email'] . "', ";
-    $sql .= "phone='" . $salesperson['phone'] . "' ";
-    $sql .= "WHERE id='" . $salesperson['id'] . "' ";
+    $sql .= "first_name='" . m($db,$salesperson['first_name']) . "', ";
+    $sql .= "last_name='" . m($db,$salesperson['last_name']) . "', ";
+    $sql .= "email='" . m($db,$salesperson['email']) . "', ";
+    $sql .= "phone='" . m($db,$salesperson['phone']) . "' ";
+    $sql .= "WHERE id='" . m($db,$salesperson['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_salesperson statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -371,7 +371,7 @@
     $sql = "SELECT * FROM territories ";
     $sql .= "LEFT JOIN salespeople_territories
               ON (territories.id = salespeople_territories.territory_id) ";
-    $sql .= "WHERE salespeople_territories.salesperson_id='" . $id . "' ";
+    $sql .= "WHERE salespeople_territories.salesperson_id='" . m($db,$id) . "' ";
     $sql .= "ORDER BY territories.name ASC;";
     $territories_result = db_query($db, $sql);
     return $territories_result;
@@ -393,7 +393,7 @@
   // Find user using id
   function find_user_by_id($id=0) {
     global $db;
-    $sql = "SELECT * FROM users WHERE id='" . $id . "' LIMIT 1;";
+    $sql = "SELECT * FROM users WHERE id='" . m($db,$id) . "' LIMIT 1;";
     $users_result = db_query($db, $sql);
     return $users_result;
   }
@@ -439,11 +439,11 @@
     $sql = "INSERT INTO users ";
     $sql .= "(first_name, last_name, email, username, created_at) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $user['first_name'] . "',";
-    $sql .= "'" . $user['last_name'] . "',";
-    $sql .= "'" . $user['email'] . "',";
-    $sql .= "'" . $user['username'] . "',";
-    $sql .= "'" . $created_at . "'";
+    $sql .= "'" . m($db,$user['first_name']) . "',";
+    $sql .= "'" . m($db,$user['last_name']) . "',";
+    $sql .= "'" . m($db,$user['email']) . "',";
+    $sql .= "'" . m($db,$user['username']) . "',";
+    $sql .= "'" . m($db,$created_at) . "'";
     $sql .= ");";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
@@ -469,11 +469,11 @@
     }
 
     $sql = "UPDATE users SET ";
-    $sql .= "first_name='" . $user['first_name'] . "', ";
-    $sql .= "last_name='" . $user['last_name'] . "', ";
-    $sql .= "email='" . $user['email'] . "', ";
-    $sql .= "username='" . $user['username'] . "' ";
-    $sql .= "WHERE id='" . $user['id'] . "' ";
+    $sql .= "first_name='" . m($db,$user['first_name']) . "', ";
+    $sql .= "last_name='" . m($db,$user['last_name']) . "', ";
+    $sql .= "email='" . m($db,$user['email']) . "', ";
+    $sql .= "username='" . m($db,$user['username']) . "' ";
+    $sql .= "WHERE id='" . m($db,$user['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_user statments, $result is just true/false
     $result = db_query($db, $sql);

@@ -4,7 +4,7 @@ require_once('../../../private/initialize.php');
 if(!isset($_GET['id'])) {
   redirect_to('index.php');
 }
-$salespeople_result = find_salesperson_by_id($_GET['id']);
+$salespeople_result = find_salesperson_by_id(h($_GET['id']));
 // No loop, only one result
 $salesperson = db_fetch_assoc($salespeople_result);
 
@@ -12,14 +12,14 @@ $salesperson = db_fetch_assoc($salespeople_result);
 $errors = array();
 
 if(is_post_request()){
-	if(isset($_POST['first_name'])) { $salesperson['first_name'] = $_POST['first_name'];}
-	if(isset($_POST['last_name'])) { $salesperson['last_name'] = $_POST['last_name']; }
-	if(isset($_POST['phone'])) { $salesperson['phone'] = $_POST['phone']; }
-	if(isset($_POST['email'])) { $salesperson['email'] = $_POST['email']; }
+	if(isset($_POST['first_name'])) { $salesperson['first_name'] = h($_POST['first_name']);}
+	if(isset($_POST['last_name'])) { $salesperson['last_name'] = h($_POST['last_name']); }
+	if(isset($_POST['phone'])) { $salesperson['phone'] = h($_POST['phone']); }
+	if(isset($_POST['email'])) { $salesperson['email'] = h($_POST['email']); }
 	
 	$result = update_salesperson($salesperson);
 	if($result === true) {
-    redirect_to('show.php?id=' . $salesperson['id']);
+    redirect_to('show.php?id=' . u(h($salesperson['id'])));
   } else {
     $errors = $result;
   }

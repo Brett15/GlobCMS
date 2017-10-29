@@ -7,16 +7,16 @@ $territory = array(
   'state_id' =>'',
   'position' => ''
 );
-if(isset($_GET['state_id'])) { $territory['state_id'] = $_GET['state_id']; }
+if(isset($_GET['state_id'])) { $territory['state_id'] = h($_GET['state_id']); }
 if(is_post_request()){
-	if(isset($_POST['name'])) { $territory['name'] = $_POST['name'];}
+	if(isset($_POST['name'])) { $territory['name'] = h($_POST['name']);}
 	
-	if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
+	if(isset($_POST['position'])) { $territory['position'] = h($_POST['position']); }
 	
 	$result = insert_territory($territory);
 	if($result === true) {
 		$new_id = db_insert_id($db);
-		redirect_to('show.php?id=' . $new_id);
+		redirect_to('show.php?id=' . u(h($new_id)));
   } else {
     $errors = $result;
   }
@@ -27,12 +27,12 @@ if(is_post_request()){
 <?php include(SHARED_PATH . '/header.php'); ?>
 
 <div id="main-content">
-  <a href="../states/show.php?id= <?php echo $territory['state_id'] ?>">Back to State Details</a><br />
+  <a href="../states/show.php?id=<?php echo $territory['state_id'] ?>">Back to State Details</a><br />
 
   <h1>New Territory</h1>
   
   <?php echo display_errors($errors); ?>
-  <form action ="new.php?state_id=<?php echo $territory['state_id']; ?>" method="post">
+  <form action ="new.php?state_id=<?php echo u(h($territory['state_id'])); ?>" method="post">
   Name:<br />
   <input type = "text" name="name" value="<?php echo $territory['name']; ?>" /><br />
     position:<br />

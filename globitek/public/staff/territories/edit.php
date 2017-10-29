@@ -12,12 +12,12 @@ $territory = db_fetch_assoc($territories_result);
 $errors = array();
 
 if(is_post_request()){
-	if(isset($_POST['name'])) { $territory['name'] = $_POST['name'];}
-	if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
+	if(isset($_POST['name'])) { $territory['name'] = h($_POST['name']);}
+	if(isset($_POST['position'])) { $territory['position'] = h($_POST['position']); }
 	
 	$result = update_territory($territory);
 	if($result === true) {
-    redirect_to('show.php?id=' . $territory['id']);
+    redirect_to('show.php?id=' . u(h($territory['id'])));
   } else {
     $errors = $result;
   }
@@ -33,7 +33,7 @@ if(is_post_request()){
   <h1>Edit Territory: <?php echo $territory['name']; ?></h1>
 
   <?php echo display_errors($errors); ?>
-  <form action ="edit.php?id=<?php echo $territory['id']; ?>" method="post">
+  <form action ="edit.php?id=<?php echo u(h($territory['id'])); ?>" method="post">
   Name:<br />
   <input type = "text" name="name" value="<?php echo $territory['name']; ?>" /><br />
     position:<br />

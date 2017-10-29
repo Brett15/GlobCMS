@@ -7,6 +7,10 @@
   function u($string="") {
     return urlencode($string);
   }
+  function m($db,$string="")
+  {
+	  return mysqli_real_escape_string($db,$string);
+  }
 
   function raw_u($string="") {
     return rawurlencode($string);
